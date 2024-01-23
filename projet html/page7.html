@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quizz time</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Quizz time</h1>
+    </header>
+    <nav>
+        <a href="page 1.html">Accueil</a>
+        <a href="page2.html">Parcours académique</a>
+        <a href="page3.html">Compétences informatiques</a>
+        <a href="page4.html">Stages et Expériences</a>
+        <a href="page5.html">Évènements</a>
+        <a href="page6.html">Contact</a>
+        <a href="page7.html">Quiz</a>
+    </nav>
+
+    <form id="quizForm">
+        <label>1. Que signifie HTML ?</label>
+        <div><input type="radio" name="q1" value="a"> feuille de style en cascade</div>
+        <div><input type="radio" name="q1" value="b"> langage de balises pour l'hypertexte</div>
+        <div><input type="radio" name="q1" value="c"> langage de script léger</div>
+
+        <label>2. Peut-on utiliser un nom de classe plusieurs fois dans une page HTML ?</label>
+        <div><input type="radio" name="q2" value="a"> oui mais une seule fois seulement par nom distinct</div>
+        <div><input type="radio" name="q2" value="b"> non</div>
+        <div><input type="radio" name="q2" value="c"> oui et même plusieurs fois pour un même nom</div>
+
+        <label>3. On utilise &lt;tr&gt; pour</label>
+        <div><input type="radio" name="q3" value="a"> une ligne de tableau</div>
+        <div><input type="radio" name="q3" value="b"> une cellule de tableau</div>
+        <div><input type="radio" name="q3" value="c"> tracer une ligne horizontale</div>
+
+        <label>4. Quelle balise permet de créer des liens ?</label>
+        <div><input type="radio" name="q4" value="a"> &lt;lnk&gt;</div>
+        <div><input type="radio" name="q4" value="b"> &lt;a&gt;</div>
+        <div><input type="radio" name="q4" value="c"> &lt;l&gt;</div>
+
+        <button type="button" onclick="calculateScore()">Valider</button>
+    </form>
+
+    <div id="result" class="score"></div>
+    <div id="correctAnswers"></div>
+
+    <script>
+        function calculateScore() {
+    // Définissez les bonnes réponses avec les valeurs correspondantes
+    var correctAnswers = {
+        q1: 'b',
+        q2: 'c',
+        q3: 'a',
+        q4: 'c'
+    };
+
+    // Exemple basique de calcul de score
+    var score = 0;
+
+    // Sélectionnez tous les éléments de formulaire de type radio
+    var answerElements = document.querySelectorAll('input[type="radio"]:checked');
+
+    // Stockez les réponses correctes pour les questions incorrectes
+    var incorrectQuestions = [];
+
+    // Parcourez les éléments sélectionnés
+    for (var i = 0; i < answerElements.length; i++) {
+        var answer = answerElements[i];
+
+        // Récupérez le nom de la question à partir du nom de l'élément
+        var questionName = answer.name;
+
+        // Vérifiez si la réponse sélectionnée est correcte
+        if (correctAnswers[questionName] === answer.value) {
+            score++;
+        } else {
+            // Stockez la question incorrecte et la réponse correcte
+            incorrectQuestions.push({
+                question: questionName,
+                correctAnswer: correctAnswers[questionName]
+            });
+        }
+    }
+
+    // Affichez le score
+    var resultDiv = document.getElementById('result');
+    resultDiv.innerHTML = 'Votre score est : ' + score + '/4'; // Modifiez le dénominateur en fonction du nombre total de questions
+
+    // Affichez les réponses correctes pour les questions incorrectes
+    var correctAnswersDiv = document.getElementById('correctAnswers');
+    correctAnswersDiv.innerHTML = '<h3>Réponses correctes pour les questions incorrectes :</h3>';
+
+    for (var j = 0; j < incorrectQuestions.length; j++) {
+        var incorrectQuestion = incorrectQuestions[j];
+        correctAnswersDiv.innerHTML += '<p>Question ' + incorrectQuestion.question.substring(1) +
+                                       ': ' + incorrectQuestion.correctAnswer + '</p>';
+    }
+}
+
+    </script>
+
+</body>
+</html>
